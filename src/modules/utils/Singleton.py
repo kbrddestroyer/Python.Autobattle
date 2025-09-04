@@ -9,25 +9,19 @@ if typing.TYPE_CHECKING:
     from typing import Any
 
 
-class AlreadyDefinedException(Exception):
-    def __init__(self, className):
-        self.className = className
-
-    def __str__(self):
-        return f"Singleton instance was already defined: {self.className}"
-
-
 class Singleton:
     INSTANCES = {}
 
     def __new__(cls, *args, **kwargs) -> Any:
-        if cls.__name__ in Singleton.INSTANCES:
-            raise AlreadyDefinedException(cls.__name__)
+        class_name = cls.__name__
+        instance = Singleton.INSTANCES.get(class_name)
+        if instance:
+            return instance
 
-        instance = super().__new__(cls, args, kwargs)
-        Singleton.INSTANCES[cls.__name__] = instance
+        instance = super().__new__(cls)
+        Singleton.INSTANCES[class_name] = instance
         return instance
 
-    @staticmethod
-    def get_instance(className: str):
-        return Singleton.INSTANCES[className]
+    @classmethod
+    def get_instance(cls):
+        return Singleton.INSTANCES[cls.__name__]

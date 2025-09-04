@@ -6,7 +6,7 @@ import typing
 from utils.Singleton import Singleton, AlreadyDefinedException
 
 
-class EntityRegistry(metaclass=Singleton):
+class EntityRegistry(Singleton):
     pass
 
 class Entity:
