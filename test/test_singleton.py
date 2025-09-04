@@ -13,3 +13,7 @@ def test_singleton():
     inst2 = FakeSingleton()
     assert FakeSingleton.get_instance() is inst
     assert inst2 is inst
+
+
+def test_singleton_create_instance():
+    assert FakeSingleton.get_instance()
